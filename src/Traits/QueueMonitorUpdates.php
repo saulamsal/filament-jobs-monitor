@@ -4,7 +4,7 @@ namespace Croustibat\FilamentJobsMonitor\Traits;
 
 use Croustibat\FilamentJobsMonitor\Models\QueueMonitor;
 
-trait QueueProgress
+trait QueueMonitorUpdates
 {
     /**
      * Update progress.
