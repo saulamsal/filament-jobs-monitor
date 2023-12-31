@@ -36,12 +36,18 @@ trait QueueMonitorUpdates
             return;
         }
 
+        // Retrieve the current custom fields and decode them into an array.
+        $currentFields = json_decode($monitor->custom_fields, true) ?? [];
+
+        // Prepare the fields to update.
         $fieldsToUpdate = is_array($key) ? $key : [$key => $value];
-        $currentFields = $monitor->custom_fields ?? [];
+
+        // Merge the new fields with the existing ones.
         $updatedFields = array_merge($currentFields, $fieldsToUpdate);
 
+        // Update the monitor with the merged fields, encoding them back into JSON.
         $monitor->update([
-            'custom_fields' => $updatedFields,
+            'custom_fields' => json_encode($updatedFields),
         ]);
     }
 
