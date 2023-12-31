@@ -13,7 +13,7 @@ trait QueueProgress
     {
         $progress = min(100, max(0, $progress));
 
-        if (! $monitor = $this->getQueueMonitor()) {
+        if (!$monitor = $this->getQueueMonitor()) {
             return;
         }
 
@@ -25,19 +25,41 @@ trait QueueProgress
     }
 
     /**
+     * Update custom fields.
+     *
+     * @param string|array $key Field key or an array of key-value pairs
+     * @param mixed $value Value for the field (if $key is a string)
+     */
+    public function setCustomFields($key, $value = null): void
+    {
+        if (!$monitor = $this->getQueueMonitor()) {
+            return;
+        }
+
+        $fieldsToUpdate = is_array($key) ? $key : [$key => $value];
+        $currentFields = $monitor->custom_fields ?? [];
+        $updatedFields = array_merge($currentFields, $fieldsToUpdate);
+
+        $monitor->update([
+            'custom_fields' => $updatedFields,
+        ]);
+    }
+
+
+    /**
      * Return Queue Monitor Model.
      */
     protected function getQueueMonitor(): ?QueueMonitor
     {
-        if (! property_exists($this, 'job')) {
+        if (!property_exists($this, 'job')) {
             return null;
         }
 
-        if (! $this->job) {
+        if (!$this->job) {
             return null;
         }
 
-        if (! $jobId = QueueMonitor::getJobId($this->job)) {
+        if (!$jobId = QueueMonitor::getJobId($this->job)) {
             return null;
         }
 

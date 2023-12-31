@@ -112,7 +112,7 @@ Just run a Background Job and go to the route `/admin/queue-monitors` to see the
 
 ### Progress Tracking in Jobs
 
-The `QueueProgress` trait provides a `setProgress` method for updating the progress of your jobs. This method takes an integer value representing the progress percentage and updates it in the `queue_monitors` table.
+The `QueueMonitorUpdates` trait provides a `setProgress `method for updating the progress of your jobs. This method takes an integer value representing the progress percentage and updates it in the `queue_monitors` table.
 
 Example usage:
 
@@ -126,10 +126,10 @@ $this->setProgress(20); // Set progress to 20%
 
 ```php
 // Updating a single custom field
-$this->updateCustomFields('fieldName', 'fieldValue');
+$this->setCustomFields('fieldName', 'fieldValue');
 
 // Updating multiple custom fields at once
-$this->updateCustomFields([
+$this->setCustomFields([
     'firstField' => 'firstValue',
     'secondField' => 'secondValue'
 ]);
@@ -139,7 +139,7 @@ $this->updateCustomFields([
 
 #### Updating Custom Fields
 
-Use the `QueueCustomFields` trait in your jobs to easily update custom fields. This trait provides a method `updateCustomFields`, which can be used to set one or multiple custom fields at once.
+Use the `QueueMonitorUpdates`  trait in your jobs to easily update custom fields. This trait provides a method `setCustomFields`, which can be used to set one or multiple custom fields at once.
 
 ## Example
 

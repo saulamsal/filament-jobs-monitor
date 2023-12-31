@@ -25,6 +25,7 @@ class QueueMonitor extends Model
         'attempt',
         'progress',
         'exception_message',
+        "custom_fields",
     ];
 
     protected $casts = [
