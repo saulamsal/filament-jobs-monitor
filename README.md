@@ -122,7 +122,7 @@ $this->setProgress(20); // Set progress to 20%
 
 ### Handling Custom Fields in Jobs
 
-`QueueMonitor` supports custom fields, allowing for more flexible job monitoring. This feature enables storing and tracking additional, job-specific data in a JSON `custom_fields` column.
+`QueueMonitorUpdates` also supports custom fields, allowing for more flexible job monitoring. This feature enables storing and tracking additional, job-specific data in a JSON `custom_fields` column.
 
 ```php
 // Updating a single custom field
@@ -135,11 +135,6 @@ $this->setCustomFields([
 ]);
 
 ```
-
-
-#### Updating Custom Fields
-
-Use the `QueueMonitorUpdates`  trait in your jobs to easily update custom fields. This trait provides a method `setCustomFields`, which can be used to set one or multiple custom fields at once.
 
 ## Example
 

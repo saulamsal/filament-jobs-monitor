@@ -71,6 +71,22 @@ class QueueMonitorResource extends Resource
                     ->label(__('filament-jobs-monitor::translations.started_at'))
                     ->since()
                     ->sortable(),
+                TextColumn::make('custom_fields')
+                    ->label('Custom Fields')
+                    ->getStateUsing(function ($record) {
+                        $customFields = $record->custom_fields;
+                        if (empty($customFields)) {
+                            return '';
+                        }
+                        $formattedFields = array_map(function ($key, $value) {
+                            return "<span class='font-medium text-xs'>{$key}: {$value}</span><br>";
+                        }, array_keys((array)json_decode($customFields, true)), (array)json_decode($customFields, true));
+                        return implode('', $formattedFields);
+                    })
+                    ->html()
+                    ->sortable(),
+
+
             ])
             ->defaultSort('started_at', 'desc')
             ->bulkActions([
