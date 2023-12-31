@@ -12,6 +12,7 @@ class FilamentJobsMonitorServiceProvider extends PackageServiceProvider
         $package->name('filament-jobs-monitor')
             ->hasConfigFile()
             ->hasTranslations()
-            ->hasMigration('create_filament-jobs-monitor_table');
+            ->hasMigration('create_filament-jobs-monitor_table')
+            ->hasMigration('add_custom_fields_to_filament_jobs_monitor_table');
     }
 }
