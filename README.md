@@ -8,16 +8,14 @@ This is a package to monitor background jobs for FilamentPHP. It is inspired by 
 <img width="800" alt="Screenshot 2023-09-13 at 23 18 44" src="https://github.com/croustibat/filament-jobs-monitor/assets/1169456/a5d5a088-865f-4265-bd37-13dce213f529">
 <img width="800" alt="Screenshot 2023-09-13 at 23 18 23" src="https://github.com/croustibat/filament-jobs-monitor/assets/1169456/e0a7730e-f459-4d99-8a40-5f35337385eb">
 
-
 ## Installation
 
 Check your filamentPHP version before installing:
 
-| Version | FilamentPHP | PHP                     |
-|---------|-------------|-------------------------|
-| 1.*     | 2.*         |       8.1.*             |
-| 2.*     | 3.*         |    8.1.* \| 8.2.*       |
-
+| Version | FilamentPHP | PHP             |
+| ------- | ----------- | --------------- |
+| 1.*     | 2.*         | 8.1.*           |
+| 2.*     | 3.*         | 8.1.*\| 8.2.* |
 
 Install the package via composer:
 
@@ -67,7 +65,7 @@ return [
 
 Sometimes it's useful to extend the model to add some custom methods. You can do it by extending the model by creating your own model :
 
-```php 
+```php
 $ php artisan make:model MyQueueMonitor
 ```
 
@@ -111,6 +109,37 @@ public function panel(Panel $panel): Panel
 ## Usage
 
 Just run a Background Job and go to the route `/admin/queue-monitors` to see the jobs.
+
+### Progress Tracking in Jobs
+
+The `QueueProgress` trait provides a `setProgress` method for updating the progress of your jobs. This method takes an integer value representing the progress percentage and updates it in the `queue_monitors` table.
+
+Example usage:
+
+```php
+$this->setProgress(20); // Set progress to 20%
+```
+
+### Handling Custom Fields in Jobs
+
+`QueueMonitor` supports custom fields, allowing for more flexible job monitoring. This feature enables storing and tracking additional, job-specific data in a JSON `custom_fields` column.
+
+```php
+// Updating a single custom field
+$this->updateCustomFields('fieldName', 'fieldValue');
+
+// Updating multiple custom fields at once
+$this->updateCustomFields([
+    'firstField' => 'firstValue',
+    'secondField' => 'secondValue'
+]);
+
+```
+
+
+#### Updating Custom Fields
+
+Use the `QueueCustomFields` trait in your jobs to easily update custom fields. This trait provides a method `updateCustomFields`, which can be used to set one or multiple custom fields at once.
 
 ## Example
 
