@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use Croustibat\FilamentJobsMonitor\Traits\QueueProgress;
+use Croustibat\FilamentJobsMonitor\Traits\QueueCustomFields;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Collection;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Storage;
 
 class UsersCsvExportJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, QueueProgress, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, QueueProgress, QueueCustomFields, SerializesModels;
 
     /**
      * The data to be exported as CSV.
@@ -48,10 +49,17 @@ class UsersCsvExportJob implements ShouldQueue
     public function handle()
     {
         $this->setProgress(0);
+        $this->updateCustomFields('fieldName', 'fieldValue');
 
         sleep(2);
 
         $this->setProgress(20);
+
+        $this->updateCustomFields([
+            'firstField' => 'firstValue',
+            'secondField' => 'secondValue'
+        ]);
+
 
         // Create a stream to write the CSV data to
         $stream = fopen('php://temp', 'w+');
